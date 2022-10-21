@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
-function App() {
+const App = () => {
+  const arr = [
+    {
+      id: 1,
+      name: "a",
+    },
+    {
+      id: 2,
+      name: "b",
+    },
+  ];
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        <h1>Todo List App</h1>
+        <form>
+          <input type="text" />
+          <button>Go</button>
+        </form>
+
+        <ul>
+          <li>
+            <span>Learn React</span>
+            <button>Edit</button>
+            <button>Delete</button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
