@@ -1,35 +1,28 @@
+import React, { useState } from "react";
 import "./App.css";
+import Todo from "./components/Todo";
 
-const App = () => {
-  const arr = [
-    {
-      id: 1,
-      name: "a",
-    },
-    {
-      id: 2,
-      name: "b",
-    },
-  ];
+function App() {
+  const [show, setShow] = useState();
+
+  const mainShow = () => {
+    setShow(!show);
+  };
   return (
-    <div className="App">
-      <div className="container">
-        <h1>Todo List App</h1>
-        <form>
-          <input type="text" />
-          <button>Go</button>
-        </form>
+    <div>
+      <div>
+        {show ? (
+          <div>
+            <button onClick={mainShow}>HIDE</button>
 
-        <ul>
-          <li>
-            <span>Learn React</span>
-            <button>Edit</button>
-            <button>Delete</button>
-          </li>
-        </ul>
+            <Todo />
+          </div>
+        ) : (
+          <button onClick={mainShow}>SHOW</button>
+        )}
       </div>
     </div>
   );
-};
+}
 
 export default App;
