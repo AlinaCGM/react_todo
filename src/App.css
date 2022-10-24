@@ -1,61 +1,73 @@
-.App {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f4f5f8;
-}
-
-.container {
-  display: flex;
-  height: 80vh;
-  padding: 20px;
-  flex-direction: column;
-  align-items: center;
-  font-size: 20px;
-  color: rgb(24, 21, 21);
-}
-
-.todoForm {
-  display: flexbox;
-  justify-content: center;
-
-  width: 450px;
+h1 {
   text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: rgb(197, 198, 199);
 }
-
-input {
-  width: 80%;
-  margin: auto;
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 2px;
-  border: none;
+#todo-list {
+  width: 500px;
+  margin: 60px auto;
+}
+form,
+.todo {
+  border: 1px solid grey;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+form {
+  display: block;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+form input {
+  padding: 4px 8px;
+  flex-grow: 1;
+  margin-right: 16px;
+}
+.todo {
+  display: flex;
+  flex-direction: column;
 }
 
 button {
+  font-size: 16px;
+  background-color: rgb(217, 60, 35);
+  color: #fff;
+  border-radius: 8px;
   border: none;
-  padding: 10px;
-  border-radius: 2px;
-  margin: 0 5px;
+  padding: 8px 16px;
+  cursor: pointer;
 }
-.allTodos {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+button:hover {
+  background-color: rgb(173, 47, 28);
 }
-.singleTodo {
-  border-radius: 2px;
-  margin: 10px 0;
-  background-color: rgb(197, 198, 199);
-  padding: 10px 20px;
+button:active {
+  background-color: rgb(130, 35, 21);
+}
+button:focus {
+  outline: 0;
+}
+input[type="text"] {
+  font-size: 20px;
+  font-family: monospace;
+}
+.todo input[type="checkbox"] {
+  transform: scale(1.8) translateY(1px);
+  margin: 0 16px 0 0;
+  cursor: pointer;
+}
+.todo-text input {
+  padding: 4px;
+}
+.todo-text {
+  font-size: 24px;
+  line-height: 24px;
+  margin-bottom: 16px;
   display: flex;
-  width: 400px;
   align-items: center;
 }
-.todoText {
-  flex: 1;
+.todo-completed {
+  display: flex;
+  margin: 10px 0;
+}
+.todo-actions {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,108 +1,129 @@
 import React from "react";
-import { useState } from "react";
-import uuid from "react-uuid";
+import { useEffect, useState } from "react";
 
-const Todo = () => {
-  const [todo, setTodo] = useState({
-    title: "",
-    deadLine: "",
-    status: "",
-  });
+function Todo() {
+  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [todoEditing, setTodoEditing] = useState(null);
+  const [editingText, setEditingText] = useState("");
 
-  const [todos, setTodos] = useState([{}]);
-  const [editId, setEditId] = useState(0);
+  useEffect(() => {
+    const json = localStorage.getItem("todos");
+    const loadedTodos = JSON.parse(json);
+    if (loadedTodos) {
+      setTodos(loadedTodos);
+    }
+  }, []);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const json = JSON.stringify(todos);
+    localStorage.setItem("todos", json);
+  }, [todos]);
+
+  function handleSubmit(e) {
     e.preventDefault();
 
-    if (editId) {
-      const editTodo = todos.find((i) => i.id === editId);
-      const updateTodos = todos.map((t) =>
-        t.id === editTodo.id
-          ? (t = { id: t.id, todo })
-          : { id: t.id, todo: t.todo }
-      );
-      setTodos(updateTodos);
-      setEditId(0);
-      setTodo({});
-      return;
-    }
+    const newTodo = {
+      id: new Date().getTime(),
+      text: todo,
+      deadline: deadline,
+      completed: false,
+    };
+    setTodos([...todos].concat(newTodo));
+    setTodo("");
+    //setDeadline([...todos].concat(newTodo));
+    setDeadline("");
+    console.log(newTodo);
+  }
 
-    if (todo.value !== "") {
-      setTodos([{ id: uuid(), todo }, ...todos]);
-      setTodo({});
-    }
-  };
+  function deleteTodo(id) {
+    let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  }
 
-  const handleDelete = (id) => {
-    const deleteTodo = todos.filter((t) => t.id !== id);
-    setTodos([...deleteTodo]);
-  };
+  function toggleComplete(id) {
+    let updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+  }
 
-  const handleEdit = (id) => {
-    const editTodo = todos.find((i) => i.id === id);
-    setTodo(editTodo.todo);
-    setEditId(id);
-  };
-  console.log(todo);
+  function submitEdits(id) {
+    const updatedTodos = [...todos].map((todo) => {
+      if (todo.id === id) {
+        todo.text = editingText;
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    setTodoEditing(null);
+  }
+  console.log("here" + todo);
+
   return (
-    <div className="App">
-      <div className="container">
-        <h1>Todo List App</h1>
-        <form className="todoForm" onSubmit={handleSubmit}>
+    <div>
+      {" "}
+      <div id="todo-list">
+        <h1>Todo List</h1>
+        <form onSubmit={handleSubmit}>
           <input
+            className="input"
             type="text"
-            placeholder="Title"
-            value={todo.title}
             onChange={(e) => setTodo(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Deadline"
-            value={todo.deadLine}
-            onChange={(e) => setTodo(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Status"
-            value={todo.status}
-            onChange={(e) => setTodo(e.target.value)}
+            value={todo}
           />
           <div>
-            <button className="btn" type="submit">
-              {" "}
-              Cancel
-            </button>
-            <button className="btn" type="submit">
-              {editId ? "Edit" : "Add"}
-            </button>
+            {" "}
+            <input
+              className="input"
+              type="text"
+              onChange={(e) => setDeadline(e.target.value)}
+              value={deadline}
+            />
           </div>
+          <button type="submit">Add Todo</button>
         </form>
+        {todos.map((todo) => (
+          <div key={todo.id} className="todo">
+            <div className="todo-text">
+              <input
+                type="checkbox"
+                id="completed"
+                checked={todo.completed}
+                onChange={() => toggleComplete(todo.id)}
+              />
+              {todo.id === todoEditing ? (
+                <input
+                  type="text"
+                  onChange={(e) => setEditingText(e.target.value)}
+                />
+              ) : (
+                <div>
+                  <p>{"Todo name: " + todo.text}</p>
+                  <p>{"Todo deadline: " + todo.deadline}</p>
+                </div>
+              )}
+            </div>
+            <div className="todo-actions">
+              {todo.id === todoEditing ? (
+                <button onClick={() => submitEdits(todo.id)}>
+                  Submit Edits
+                </button>
+              ) : (
+                <button onClick={() => setTodoEditing(todo.id)}>Edit</button>
+              )}
 
-        <ul className="allTodos">
-          {todos.map((id, value) => (
-            <li className="singleTodo" key={id}>
-              <span className="todoText">{value}</span>
-
-              <button onClick={() => handleEdit(id)}>Edit</button>
-              <button onClick={() => handleDelete(id)}>Delete</button>
-            </li>
-          ))}
-
-          {/* {todos.map((t) => (
-            <li className="singleTodo" key={t.id}>
-              <span className="todoText">
-                {`${t.title},${t.deadLine},${t.status}`}
-              </span>
-
-              <button onClick={() => handleEdit(t.id)}>Edit</button>
-              <button onClick={() => handleDelete(t.id)}>Delete</button>
-            </li>
-          ))} */}
-        </ul>
+              <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
-};
+}
 
 export default Todo;
