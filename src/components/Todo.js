@@ -6,7 +6,8 @@ function Todo() {
   const [todo, setTodo] = useState("");
   const [deadline, setDeadline] = useState("");
   const [todoEditing, setTodoEditing] = useState(null);
-  const [editingText, setEditingText] = useState("");
+  const [editingText, setEditingText] = useState([]);
+  const [editingDeadLine, setEditingDeadLine] = useState([]);
 
   useEffect(() => {
     const json = localStorage.getItem("todos");
@@ -56,7 +57,9 @@ function Todo() {
     const updatedTodos = [...todos].map((todo) => {
       if (todo.id === id) {
         todo.text = editingText;
+        todo.deadline = editingDeadLine;
       }
+
       return todo;
     });
     setTodos(updatedTodos);
@@ -97,10 +100,19 @@ function Todo() {
                 onChange={() => toggleComplete(todo.id)}
               />
               {todo.id === todoEditing ? (
-                <input
-                  type="text"
-                  onChange={(e) => setEditingText(e.target.value)}
-                />
+                <div>
+                  <input
+                    type="text"
+                    onChange={(e) => setEditingText(e.target.value)}
+                    value={editingText}
+                  />
+
+                  <input
+                    type="text"
+                    onChange={(e) => setEditingDeadLine(e.target.value)}
+                    value={editingDeadLine}
+                  />
+                </div>
               ) : (
                 <div>
                   <p>{"Todo name: " + todo.text}</p>
