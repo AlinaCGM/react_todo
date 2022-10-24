@@ -20,6 +20,18 @@ form input {
   padding: 4px 8px;
   flex-grow: 1;
   margin-right: 16px;
+  display: block;
+  margin-bottom: 10px;
+}
+select {
+  width: 60%;
+  height: 40px;
+  padding: 4px 8px;
+  flex-grow: 1;
+  margin-right: 16px;
+  margin-bottom: 10px;
+  display: block;
+  border: 1px solid grey;
 }
 .todo {
   display: flex;
@@ -28,7 +40,7 @@ form input {
 
 button {
   font-size: 16px;
-  background-color: rgb(217, 60, 35);
+  background-color: rgb(142, 135, 134);
   color: #fff;
   border-radius: 8px;
   border: none;
@@ -71,13 +83,3 @@ input[type="text"] {
   display: flex;
   justify-content: space-between;
 }
-/* .redd {
-  background-color: red;
-  width: 5px;
-  height: 60px;
-}
-.bblue {
-  background-color: blue;
-  width: 5px;
-  height: 60px;
-} */

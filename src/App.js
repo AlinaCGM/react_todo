@@ -12,12 +12,12 @@ const App = () => {
     <div id="todo-list">
       {show ? (
         <div>
-          <button onClick={mainShow}>HIDE</button>
+          <button onClick={mainShow}>Hide</button>
 
           <Todo />
         </div>
       ) : (
-        <button onClick={mainShow}>SHOW</button>
+        <button onClick={mainShow}>Add a new todo</button>
       )}{" "}
     </div>
   );
