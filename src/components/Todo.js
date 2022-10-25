@@ -2,12 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 function Todo() {
-  // const options = [
-  //   { value: "", text: "--Choose an option--" },
-  //   { value: "apple", text: "Apple 🍏" },
-  //   { value: "banana", text: "Banana 🍌" },
-  //   { value: "kiwi", text: "Kiwi 🥝" },
-  // ];
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -42,7 +36,7 @@ function Todo() {
     setTodos([...todos].concat(newTodo));
     setTodo("");
     setDeadline("");
-    setStatus("status");
+    setStatus("");
     console.log(newTodo);
   }
 
@@ -74,7 +68,12 @@ function Todo() {
     setTodos(updatedTodos);
     setTodoEditing(null);
   }
-
+  const options = [
+    { value: "", text: "--Choose an option--" },
+    { value: "apple", text: "Apple 🍏" },
+    { value: "banana", text: "Banana 🍌" },
+    { value: "kiwi", text: "Kiwi 🥝" },
+  ];
   return (
     <div>
       {" "}
@@ -102,11 +101,24 @@ function Todo() {
               setStatus(e.target.value);
             }}
           >
-            <option value="">Status</option>
-            <option value="steak">Steak</option>
-            <option value="sandwich">Sandwich</option>
-            <option value="dumpling">Dumpling</option>
+            {options.map((option) => (
+              <option key={option.id} value={option.value}>
+                {options.value}
+              </option>
+            ))}
           </select>
+          {/* <select
+            className="input"
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value);
+            }}
+          >
+            <option value="">Status</option>
+            <option value="Steak">Steak</option>
+            <option value="Sandwich">Sandwich</option>
+            <option value="Dumpling">Dumpling</option>
+          </select> */}
           {/* <div> {status}</div> */}
           <div className="btn">
             <button type="submit">Cancel</button>
@@ -135,15 +147,31 @@ function Todo() {
                     onChange={(e) => setEditingDeadLine(e.target.value)}
                     value={editingDeadLine}
                   />
+                  <select
+                    value={status}
+                    onChange={(e) => setEditingStatus(e.target.value)}
+                  >
+                    {options.map((option) => (
+                      <option key={option.id} value={option.value}>
+                        {option.value}
+                      </option>
+                    ))}
+                  </select>
                   {/* <select
                     value={status}
                     onChange={(e) => setEditingStatus(e.target.value)}
-                  ></select> */}
+                  >
+                    <option value="">Status</option>
+                    <option value="Steak">Steak</option>
+                    <option value="Sandwich">Sandwich</option>
+                    <option value="Dumpling">Dumpling</option>
+                  </select> */}
                 </div>
               ) : (
                 <div>
                   <p>{todo.text}</p>
                   <p>{"Deadline: " + todo.deadline}</p>
+                  <p>{status}</p>
                 </div>
               )}
             </div>
