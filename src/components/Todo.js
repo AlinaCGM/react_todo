@@ -30,7 +30,7 @@ function Todo() {
       id: new Date().getTime(),
       text: todo,
       deadline: deadline,
-      completed: false,
+      // completed: false,
       status: status,
     };
     setTodos([...todos].concat(newTodo));
@@ -70,10 +70,12 @@ function Todo() {
   }
   const options = [
     { value: "", text: "--Choose an option--" },
-    { value: "apple", text: "Apple 🍏" },
-    { value: "banana", text: "Banana 🍌" },
-    { value: "kiwi", text: "Kiwi 🥝" },
+    { value: 1, text: "Done" },
+    { value: 2, text: "Not started" },
+    { value: 3, text: "In progress" },
   ];
+
+  console.log(options);
   return (
     <div>
       {" "}
@@ -95,7 +97,7 @@ function Todo() {
             placeholder="Deadline"
           />{" "}
           <select
-            className="input"
+            className="input "
             value={status}
             onChange={(e) => {
               setStatus(e.target.value);
@@ -103,23 +105,10 @@ function Todo() {
           >
             {options.map((option) => (
               <option key={option.id} value={option.value}>
-                {options.value}
+                {option.text}
               </option>
             ))}
           </select>
-          {/* <select
-            className="input"
-            value={status}
-            onChange={(e) => {
-              setStatus(e.target.value);
-            }}
-          >
-            <option value="">Status</option>
-            <option value="Steak">Steak</option>
-            <option value="Sandwich">Sandwich</option>
-            <option value="Dumpling">Dumpling</option>
-          </select> */}
-          {/* <div> {status}</div> */}
           <div className="btn">
             <button type="submit">Cancel</button>
             <button type="submit">Add</button>
@@ -153,25 +142,16 @@ function Todo() {
                   >
                     {options.map((option) => (
                       <option key={option.id} value={option.value}>
-                        {option.value}
+                        {option.text}
                       </option>
                     ))}
                   </select>
-                  {/* <select
-                    value={status}
-                    onChange={(e) => setEditingStatus(e.target.value)}
-                  >
-                    <option value="">Status</option>
-                    <option value="Steak">Steak</option>
-                    <option value="Sandwich">Sandwich</option>
-                    <option value="Dumpling">Dumpling</option>
-                  </select> */}
                 </div>
               ) : (
                 <div>
-                  <p>{todo.text}</p>
+                  <p>{"Todo title: " + todo.text}</p>
                   <p>{"Deadline: " + todo.deadline}</p>
-                  <p>{status}</p>
+                  <p>{"Status: " + todo.status}</p>
                 </div>
               )}
             </div>

@@ -27,7 +27,7 @@ form input {
 ::placeholder {
   color: rgb(116, 111, 111);
   font-size: 20px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Times New Roman", Times, serif;
 }
 select {
   width: 100%;
@@ -48,7 +48,7 @@ select {
 .btn {
   align-items: center;
   display: flex;
-  justify-content: end;
+  /* justify-content: end; */
 }
 button {
   font-size: 16px;
