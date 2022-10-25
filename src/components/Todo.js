@@ -2,14 +2,20 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 function Todo() {
+  // const options = [
+  //   { value: "", text: "--Choose an option--" },
+  //   { value: "apple", text: "Apple 🍏" },
+  //   { value: "banana", text: "Banana 🍌" },
+  //   { value: "kiwi", text: "Kiwi 🥝" },
+  // ];
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState("");
   const [todoEditing, setTodoEditing] = useState(null);
   const [editingText, setEditingText] = useState([]);
   const [editingDeadLine, setEditingDeadLine] = useState([]);
-
+  const [editingStatus, setEditingStatus] = useState([]);
   useEffect(() => {
     const json = localStorage.getItem("todos");
     const loadedTodos = JSON.parse(json);
@@ -35,8 +41,8 @@ function Todo() {
     };
     setTodos([...todos].concat(newTodo));
     setTodo("");
-    //setDeadline([...todos].concat(newTodo));
     setDeadline("");
+    setStatus("status");
     console.log(newTodo);
   }
 
@@ -60,6 +66,7 @@ function Todo() {
       if (todo.id === id) {
         todo.text = editingText;
         todo.deadline = editingDeadLine;
+        todo.status = editingStatus;
       }
 
       return todo;
@@ -67,56 +74,44 @@ function Todo() {
     setTodos(updatedTodos);
     setTodoEditing(null);
   }
-  console.log("here" + todo);
-
-  // const showDropdown = () => {
-  //   setStatus(true);
-  // };
-  // const hideDropdown = () => {
-  //   setStatus(false);
-  // };
 
   return (
     <div>
       {" "}
       <div id="todo-list">
-        <h1>Todo List</h1>
         <form onSubmit={handleSubmit}>
+          <p>Add new todo</p>
           <input
             className="input"
             type="text"
             onChange={(e) => setTodo(e.target.value)}
             value={todo}
+            placeholder="Title"
           />{" "}
           <input
             className="input"
             type="text"
             onChange={(e) => setDeadline(e.target.value)}
             value={deadline}
-          />
-          {/* <div
-            className="dropdown"
-            onMouseEnter={showDropdown}
-            onMouseLeave={hideDropdown}
+            placeholder="Deadline"
+          />{" "}
+          <select
+            className="input"
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value);
+            }}
           >
-            {status ? (
-              <ul className="dropdown-list" onMouseEnter={showDropdown}>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-              </ul>
-            ) : null}
-          </div> */}
-          <div>
-            {" "}
-            <select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
+            <option value="">Status</option>
+            <option value="steak">Steak</option>
+            <option value="sandwich">Sandwich</option>
+            <option value="dumpling">Dumpling</option>
+          </select>
+          {/* <div> {status}</div> */}
+          <div className="btn">
+            <button type="submit">Cancel</button>
+            <button type="submit">Add</button>
           </div>
-          <button type="submit">Cancel</button>
-          <button type="submit">Add</button>
         </form>
         {todos.map((todo) => (
           <div key={todo.id} className="todo">
@@ -140,11 +135,15 @@ function Todo() {
                     onChange={(e) => setEditingDeadLine(e.target.value)}
                     value={editingDeadLine}
                   />
+                  {/* <select
+                    value={status}
+                    onChange={(e) => setEditingStatus(e.target.value)}
+                  ></select> */}
                 </div>
               ) : (
                 <div>
-                  <p>{"Todo name: " + todo.text}</p>
-                  <p>{"Todo deadline: " + todo.deadline}</p>
+                  <p>{todo.text}</p>
+                  <p>{"Deadline: " + todo.deadline}</p>
                 </div>
               )}
             </div>
