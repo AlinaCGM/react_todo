@@ -45,15 +45,15 @@ function Todo() {
     setTodos(updatedTodos);
   }
 
-  function toggleComplete(id) {
-    let updatedTodos = [...todos].map((todo) => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    });
-    setTodos(updatedTodos);
-  }
+  // function toggleComplete(id) {
+  //   let updatedTodos = [...todos].map((todo) => {
+  //     if (todo.id === id) {
+  //       todo.completed = !todo.completed;
+  //     }
+  //     return todo;
+  //   });
+  //   setTodos(updatedTodos);
+  // }
 
   function submitEdits(id) {
     const updatedTodos = [...todos].map((todo) => {
@@ -70,9 +70,9 @@ function Todo() {
   }
   const options = [
     { value: "", text: "--Choose an option--" },
-    { value: 1, text: "Done" },
-    { value: 2, text: "Not started" },
-    { value: 3, text: "In progress" },
+    { value: "Done", text: "Done" },
+    { value: "Not started", text: "Not started" },
+    { value: "In progress", text: "In progress" },
   ];
 
   console.log(options);
@@ -117,12 +117,6 @@ function Todo() {
         {todos.map((todo) => (
           <div key={todo.id} className="todo">
             <div className="todo-text">
-              <input
-                type="checkbox"
-                id="completed"
-                checked={todo.completed}
-                onChange={() => toggleComplete(todo.id)}
-              />
               {todo.id === todoEditing ? (
                 <div>
                   <input
@@ -151,7 +145,33 @@ function Todo() {
                 <div>
                   <p>{"Todo title: " + todo.text}</p>
                   <p>{"Deadline: " + todo.deadline}</p>
-                  <p>{"Status: " + todo.status}</p>
+                  {/* <p>{"Status: " + todo.status}</p> */}
+                  {(() => {
+                    if (todo.status === "Done") {
+                      return (
+                        <div
+                          className="status"
+                          style={{ backgroundColor: "red" }}
+                        >
+                          {/* {"Status: " + todo.status} */}
+                        </div>
+                      );
+                    } else if (todo.status === "Not started") {
+                      return (
+                        <div
+                          className="status"
+                          style={{ backgroundColor: "green" }}
+                        ></div>
+                      );
+                    } else {
+                      return (
+                        <div
+                          className="status"
+                          style={{ backgroundColor: "blue" }}
+                        ></div>
+                      );
+                    }
+                  })()}
                 </div>
               )}
             </div>
