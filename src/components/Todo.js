@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function Todo() {
   const [todos, setTodos] = useState([]);
@@ -10,18 +10,6 @@ function Todo() {
   const [editingText, setEditingText] = useState([]);
   const [editingDeadLine, setEditingDeadLine] = useState([]);
   const [editingStatus, setEditingStatus] = useState([]);
-  useEffect(() => {
-    const json = localStorage.getItem("todos");
-    const loadedTodos = JSON.parse(json);
-    if (loadedTodos) {
-      setTodos(loadedTodos);
-    }
-  }, []);
-
-  useEffect(() => {
-    const json = JSON.stringify(todos);
-    localStorage.setItem("todos", json);
-  }, [todos]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -45,16 +33,6 @@ function Todo() {
     setTodos(updatedTodos);
   }
 
-  // function toggleComplete(id) {
-  //   let updatedTodos = [...todos].map((todo) => {
-  //     if (todo.id === id) {
-  //       todo.completed = !todo.completed;
-  //     }
-  //     return todo;
-  //   });
-  //   setTodos(updatedTodos);
-  // }
-
   function submitEdits(id) {
     const updatedTodos = [...todos].map((todo) => {
       if (todo.id === id) {
@@ -68,8 +46,14 @@ function Todo() {
     setTodos(updatedTodos);
     setTodoEditing(null);
   }
+
+  const handleCancel = () => {
+    setTodo("");
+    setDeadline("");
+    setStatus("");
+  };
   const options = [
-    { value: "", text: "--Choose an option--" },
+    { value: "", text: "Status" },
     { value: "Done", text: "Done" },
     { value: "Not started", text: "Not started" },
     { value: "In progress", text: "In progress" },
@@ -80,40 +64,47 @@ function Todo() {
     <div>
       {" "}
       <div id="todo-list">
-        <form onSubmit={handleSubmit}>
-          <p>Add new todo</p>
-          <input
-            className="input"
-            type="text"
-            onChange={(e) => setTodo(e.target.value)}
-            value={todo}
-            placeholder="Title"
-          />{" "}
-          <input
-            className="input"
-            type="text"
-            onChange={(e) => setDeadline(e.target.value)}
-            value={deadline}
-            placeholder="Deadline"
-          />{" "}
-          <select
-            className="input "
-            value={status}
-            onChange={(e) => {
-              setStatus(e.target.value);
-            }}
-          >
-            {options.map((option) => (
-              <option key={option.id} value={option.value}>
-                {option.text}
-              </option>
-            ))}
-          </select>
+        <div className="form">
+          <form onSubmit={handleSubmit}>
+            <p>Add new todo</p>
+            <input
+              className="input"
+              type="text"
+              onChange={(e) => setTodo(e.target.value)}
+              value={todo}
+              placeholder="Title"
+            />{" "}
+            <input
+              className="input"
+              type="text"
+              onChange={(e) => setDeadline(e.target.value)}
+              value={deadline}
+              placeholder="Deadline"
+            />{" "}
+            <select
+              className="input "
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
+            >
+              {options.map((option) => (
+                <option key={option.id} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
+            </select>
+          </form>
           <div className="btn">
-            <button type="submit">Cancel</button>
-            <button type="submit">Add</button>
+            <button type="submit" onClick={handleCancel}>
+              Cancel
+            </button>
+
+            <button type="submit" onClick={handleSubmit}>
+              Add
+            </button>
           </div>
-        </form>
+        </div>
         {todos.map((todo) => (
           <div key={todo.id} className="todo">
             <div className="todo-text">
@@ -151,7 +142,7 @@ function Todo() {
                       return (
                         <div
                           className="status"
-                          style={{ backgroundColor: "red" }}
+                          style={{ backgroundColor: "#93C47D" }}
                         >
                           {/* {"Status: " + todo.status} */}
                         </div>
@@ -160,14 +151,14 @@ function Todo() {
                       return (
                         <div
                           className="status"
-                          style={{ backgroundColor: "green" }}
+                          style={{ backgroundColor: "#EA9999" }}
                         ></div>
                       );
                     } else {
                       return (
                         <div
                           className="status"
-                          style={{ backgroundColor: "blue" }}
+                          style={{ backgroundColor: "#FFE59A" }}
                         ></div>
                       );
                     }
@@ -188,6 +179,11 @@ function Todo() {
             </div>
           </div>
         ))}
+      </div>
+      <div className="options-color">
+        <span className="first-green">Done</span>
+        <span className="second-pink">Not started</span>
+        <span className="third-yellow">In progress</span>
       </div>
     </div>
   );
