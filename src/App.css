@@ -73,13 +73,8 @@ button:focus {
 }
 input[type="text"] {
   font-size: 20px;
-  font-family: "Courier New", Courier, monospace;
 }
-.todo input[type="checkbox"] {
-  transform: scale(1.8) translateY(1px);
-  margin: 0 16px 0 0;
-  cursor: pointer;
-}
+
 .todo-text input {
   padding: 4px;
 }
@@ -131,4 +126,13 @@ input[type="text"] {
   padding-top: 15px;
   padding-left: 15px;
   border-left: 10px solid #ffe59a;
+}
+.deadline-text {
+  font-size: 20px;
+  color: #676869;
+  font-style: italic;
+  line-height: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
 }

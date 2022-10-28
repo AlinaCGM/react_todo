@@ -122,7 +122,7 @@ function Todo() {
                     value={editingDeadLine}
                   />
                   <select
-                    value={status}
+                    value={editingStatus}
                     onChange={(e) => setEditingStatus(e.target.value)}
                   >
                     {options.map((option) => (
@@ -134,8 +134,10 @@ function Todo() {
                 </div>
               ) : (
                 <div>
-                  <p>{"Todo title: " + todo.text}</p>
-                  <p>{"Deadline: " + todo.deadline}</p>
+                  <p>{todo.text}</p>
+                  <p className="deadline-text">
+                    {"Deadline: " + todo.deadline}
+                  </p>
                   {/* <p>{"Status: " + todo.status}</p> */}
                   {(() => {
                     if (todo.status === "Done") {
